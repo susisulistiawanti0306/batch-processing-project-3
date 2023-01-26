@@ -16,6 +16,12 @@ cur.execute("""
     """
     )
 
-cur.execute("INSERT INTO latihan_user VALUES (%s, %s, %s, %s, %s)", (1, 'hello@dataquest.io', 'Some Name','621234413','1234'))
+import csv
+with open("D:\\SUSI\\batch-processing-project-3\\source\\users_w_postal_code.csv") as f:
+    csv_reader = csv.reader (f, delimiter=',')
+    next(csv_reader)
+    for row in csv_reader:
+        cur.execute("INSERT INTO latihan_user VALUES ( default, %s, %s, %s, %s) ON CONFLICT DO NOTHING", row)
+        
 conn.commit()
-print("Creat Table Success")
+#print("Creat Table Success")
